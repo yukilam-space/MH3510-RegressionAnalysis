@@ -102,3 +102,28 @@ if(length(significant_vars) > 1) { #excluding the intercept
   cat("Significant predictors:", 
       paste(significant_vars[significant_vars != "(Intercept)"], collapse = ", "), "\n")
 }
+
+#from the viewpoint of residuals 
+#4.2.1
+qqnorm(residuals(mlr),ylab ='Residuals',col="purple")
+qqline(residuals(mlr))
+
+#4.2.2
+par(mfrow=c(1, 1))
+
+# Plot residuals vs Time
+plot(residuals(mlr), ylab='Residuals', xlab='Time')
+
+# Plot residuals vs Fitted values
+plot(residuals(mlr), fitted(mlr), ylab='Residuals', xlab='Fitted values')
+
+# Plot residuals vs X1
+plot(residuals(mlr), trafficdata$X1, ylab='Residuals', xlab='X1')
+
+# Plot residuals vs X2
+plot(residuals(mlr), trafficdata$X2, ylab='Residuals', xlab='X2')
+
+# Plot residuals vs X3
+plot(residuals(mlr), trafficdata$X3, ylab='Residuals', xlab='X3')
+
+
