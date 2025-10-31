@@ -144,7 +144,7 @@ plot(trafficdata$X3, resid(mlr_summary),
 abline(h = 0, col = "red")
 
 library(ggplot2)
-ggplot(trafficdata, aes(x = trafficdata$X3, y = resid(mlr_summary))) +
+ggplot(trafficdata, aes(x = X3, y = resid(mlr_summary))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, col = "blue") +
   geom_hline(yintercept = 0, col = "red") +
@@ -192,8 +192,7 @@ ggplot(trafficdata, aes(x = X3, y = resid(mlr2))) +
        x = "Road Width (ft)",
        y = "Residuals")
 
-# third try and final: y (independent var) right skewed, X4 is category variable, X3 non linearity.
-#this shows higher F-statistic value
+# third try
 mlr3 <- lm(log(y) ~ X1 + X2 + X3 + factor(X4), data = trafficdata) 
 # Summary of the new model
 summary(mlr3)
@@ -213,31 +212,53 @@ ggplot(trafficdata, aes(x = X3, y = resid(mlr3))) +
        x = "Road Width (ft)",
        y = "Residuals")
 
+
+# fourth try and final: y (independent var) right skewed, X4 is category variable, X3 non linearity.
+#this shows higher F-statistic value
+mlr4 <- lm(log(y) ~ log(X1) + X2 + X3 + factor(X4), data = trafficdata) 
+# Summary of the new model
+summary(mlr4)
+# Residuals vs X3 plot (base R)
+plot(trafficdata$X3, resid(mlr4),
+     xlab = "Road Width (X3)",
+     ylab = "Residuals",
+     main = "Residuals vs Road Width (X3) with Quadratic Term")
+abline(h = 0, col = "red")
+# Residuals vs X3 plot (ggplot2)
+library(ggplot2)
+ggplot(trafficdata, aes(x = X3, y = resid(mlr4))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, col = "blue") +
+  geom_hline(yintercept = 0, col = "red") +
+  labs(title = "Residuals vs X3 (Quadratic Model)",
+       x = "Road Width (ft)",
+       y = "Residuals")
+
 #quick run thru on 4.2 on new model
 #4.2.1
-qqnorm(residuals(mlr3),ylab ='Residuals',col="purple")
-qqline(residuals(mlr3))# shows good graph
+qqnorm(residuals(mlr4),ylab ='Residuals',col="purple")
+qqline(residuals(mlr4))# shows good graph
 
 #4.2.2
 par(mfrow=c(1, 6))
 # Plot residuals vs Time
-plot(residuals(mlr3), ylab='Residuals', xlab='Time')
+plot(residuals(mlr4), ylab='Residuals', xlab='Time')
 # Plot residuals vs Fitted values
-plot(residuals(mlr3), fitted(mlr), ylab='Residuals', xlab='Fitted values')
+plot(residuals(mlr4), fitted(mlr), ylab='Residuals', xlab='Fitted values')
 # Plot residuals vs X1
-plot(residuals(mlr3), trafficdata$X1, ylab='Residuals', xlab='X1')
+plot(residuals(mlr4), trafficdata$X1, ylab='Residuals', xlab='X1')
 # Plot residuals vs X2
-plot(residuals(mlr3), trafficdata$X2, ylab='Residuals', xlab='X2')
+plot(residuals(mlr4), trafficdata$X2, ylab='Residuals', xlab='X2')
 # Plot residuals vs X3
-plot(residuals(mlr3), trafficdata$X3, ylab='Residuals', xlab='X3')
+plot(residuals(mlr4), trafficdata$X3, ylab='Residuals', xlab='X3')
 # Plot residuals vs X4
-plot(residuals(mlr3), trafficdata$X4, ylab='Residuals', xlab='X4')
+plot(residuals(mlr4), trafficdata$X4, ylab='Residuals', xlab='X4')
 par(mfrow=c(1, 1))
 
 # no more fanning graph (heteroscedasticity) at residuals vs fitted values , hence solved
 
 #4.2.3
-dwtest(log(y) ~ X1 + X2 + X3 + factor(X4), data=trafficdata) #DW value still not satisfied
+dwtest(log(y) ~ log(X1) + X2 + X3 + factor(X4), data=trafficdata) #DW value still not satisfied
 
 # Robust standard errors
 install.packages("sandwich")
