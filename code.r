@@ -129,5 +129,3 @@ plot(residuals(mlr), trafficdata$X3, ylab='Residuals', xlab='X3')
 #4.2.3
 library(lmtest)
 dwtest(y~X1+X2+X3+X4, data=trafficdata)
-
-#4.2.4
