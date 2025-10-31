@@ -19,7 +19,6 @@ plot(trafficdata)
 mlr = lm(y~X1+X2+X3+X4, data = trafficdata)
 summary(mlr) 
 names(mlr) 
-summary(mlr)
 
 
 #4. Adequacy checking (From the viewpoint of the fitted model)
@@ -28,6 +27,8 @@ summary(mlr)
 
 #extract summary statistics
 mlr_summary <- summary(mlr)
+names(mlr_summary)
+
 cat("F-statistic and R-squared:\n")
 cat("F-statistic:", mlr_summary$fstatistic[1], "on", 
     mlr_summary$fstatistic[2], "and", mlr_summary$fstatistic[3], "DF\n")
