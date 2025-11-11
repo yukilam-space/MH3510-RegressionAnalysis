@@ -119,7 +119,7 @@ For specified values: X1 = 50,000, X2 = 3, X4 = 2 (no access control)
 ## File Structure
 
 - `aadt.txt` - Raw data file
-- Complete R code provided at the end of the submitted document
+- Complete R code in the file code.r
 - Project follows structured regression analysis methodology
 
 This project demonstrates a comprehensive regression modeling approach with thorough diagnostic checking, appropriate variable transformations, and robust statistical inference to address real-world traffic prediction challenges.
