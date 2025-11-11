@@ -61,7 +61,7 @@ The dataset `aadt.txt` contains traffic monitoring data with 121 observations an
 - F-test for X3 removal: F = 0.0709, p-value = 0.7905
 - Principle of parsimony: Simpler model with better adjusted R²
 
-**Final Model Statistics from PDF:**
+**Final Model Statistics:**
 
 - Residual standard error: 0.723 on 117 degrees of freedom
 - Multiple R-squared: 0.7982
